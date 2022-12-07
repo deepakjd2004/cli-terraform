@@ -353,15 +353,15 @@ func getEdgeHostnameDetail(ctx context.Context, clientPAPI papi.PAPI, clientHAPI
 		}
 
 		// Get slot details
-		edgeHostnameID, err := strconv.Atoi(strings.Replace(hostname.EdgeHostnameID, "ehn_", "", 1))
-		if err != nil {
+		 edgeHostnameID, err := strconv.Atoi(strings.Replace(hostname.EdgeHostnameID, "ehn_", "", 1))
+		 if err != nil {
 			return nil, nil, fmt.Errorf("invalid Hostname id: %s", err)
-		}
+		 }
 
-		edgeHostname, err := clientHAPI.GetEdgeHostname(ctx, edgeHostnameID)
-		if err != nil {
-			return nil, nil, fmt.Errorf("edge hostname %d not found: %s", edgeHostnameID, err)
-		}
+		// edgeHostname, err := clientHAPI.GetEdgeHostname(ctx, edgeHostnameID)
+		// if err != nil {
+		//	return nil, nil, fmt.Errorf("edge hostname %d not found: %s", edgeHostnameID, err)
+		// }
 		papiEdgeHostnames, err := clientPAPI.GetEdgeHostnames(ctx, papi.GetEdgeHostnamesRequest{
 			ContractID: property.ContractID,
 			GroupID:    property.GroupID,
@@ -388,8 +388,10 @@ func getEdgeHostnameDetail(ctx context.Context, clientPAPI papi.PAPI, clientHAPI
 			GroupID:                  property.GroupID,
 			IPv6:                     getIPv6(papiEdgeHostnames, hostname.EdgeHostnameID),
 			EdgeHostnameResourceName: cnameToResource,
-			SlotNumber:               edgeHostname.SlotNumber,
-			SecurityType:             edgeHostname.SecurityType,
+			SlotNumber:               99999
+			//SlotNumber:               edgeHostname.SlotNumber,
+			SecurityType:             "dummy",
+			//SecurityType:             edgeHostname.SecurityType,
 			UseCases:                 useCases,
 		}
 
